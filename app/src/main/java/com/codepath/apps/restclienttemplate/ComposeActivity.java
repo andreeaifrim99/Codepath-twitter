@@ -37,10 +37,10 @@ public class ComposeActivity extends AppCompatActivity {
                 sendTweet();
             }
         });
-        client = TwitterApp.getRestClient(this);
     }
 
     private void sendTweet() {
+        client = TwitterApp.getRestClient(this);
         client.sendTweet(etTweetInput.getText().toString(), new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -53,7 +53,7 @@ public class ComposeActivity extends AppCompatActivity {
                         //return result to calling activity
                         Intent resultData = new Intent();
                         //WRONG:
-                        resultData.putExtra(RESULT_TWEET_KEY, Parcels.wrap(resultTweet.toString()));
+                        resultData.putExtra(RESULT_TWEET_KEY, Parcels.wrap(resultTweet));
                                 //STRING IS WRONG - TWEET SHOULD BE WRAPPED IN PARCEL
                                 //MAKE TWEET PARCELABLE
 
