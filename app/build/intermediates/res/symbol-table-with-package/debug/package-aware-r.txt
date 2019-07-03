@@ -390,6 +390,10 @@ color bright_foreground_material_dark
 color bright_foreground_material_light
 color button_material_dark
 color button_material_light
+color colorAccent
+color colorPrimary
+color colorPrimaryDark
+color darkBlue
 color dim_foreground_disabled_material_dark
 color dim_foreground_disabled_material_light
 color dim_foreground_material_dark
@@ -437,6 +441,7 @@ color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
 color tooltip_background_dark
 color tooltip_background_light
+color twitterblue
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
 dimen abc_action_bar_default_height_material
@@ -649,6 +654,13 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable ic_action_name
 drawable ic_launcher
+drawable ic_launcher_twitter_round
+drawable ic_vector_heart
+drawable ic_vector_heart_stroke
+drawable ic_vector_messages
+drawable ic_vector_messages_stroke
+drawable ic_vector_retweet
+drawable ic_vector_retweet_stroke
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -750,6 +762,7 @@ id listMode
 id list_item
 id media_actions
 id message
+id miActionProgress
 id miCompose
 id middle
 id multiply
@@ -762,6 +775,7 @@ id notification_main_column_container
 id packed
 id parent
 id parentPanel
+id pbProgressAction
 id percent
 id progress_circular
 id progress_horizontal
@@ -858,6 +872,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout action_view_progress
 layout activity_compose
 layout activity_login
 layout activity_timeline

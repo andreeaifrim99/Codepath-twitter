@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -28,6 +30,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     public static final int COMPOSE_TWEET_REQUEST_CODE = 100;
     private SwipeRefreshLayout swipeContainer;
+    MenuItem miActionProgressItem;
 
     TwitterClient client;
     TweetAdapter tweetAdapter;
@@ -51,6 +54,12 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         //sert adapter
         rvTweets.setAdapter(tweetAdapter);
+
+        /*getSupportActionBar().setTitle("Twitter");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#03A9F4")));
+        getSupportActionBar().setLogo(getDrawable(R.drawable.ic_launcher_twitter_round));
+        getSupportActionBar().setDisplayUseLogoEnabled(true);*/
 
         populateTimeline();
 
@@ -79,16 +88,40 @@ public class TimelineActivity extends AppCompatActivity {
         // `client` here is an instance of Android Async HTTP
         // getHomeTimeline is an example endpoint.
                 // Remember to CLEAR OUT old items before appending in the new ones
-                tweetAdapter.clear();
-                // ...the data has come back, add new items to your adapter...
-                /*for (int i = 0; i < json.length(); i++) {
-                    tweets.add(Tweet.fromJSON(json.getJSONObject(i)));
-                }*/
-                populateTimeline();
+        showProgressBar();
+        tweetAdapter.clear();
+        // ...the data has come back, add new items to your adapter...
+        /*for (int i = 0; i < json.length(); i++) {
+                   tweets.add(Tweet.fromJSON(json.getJSONObject(i)));
+               }*/
+
+        populateTimeline();
                 // Now we call setRefreshing(false) to signal refresh has finished
-                swipeContainer.setRefreshing(false);
+        swipeContainer.setRefreshing(false);
+        hideProgressBar();
     }
 
+
+    //next 3 methods are used to make the progress bar
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        // Extract the action-view from the menu item
+        ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(miActionProgressItem);
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+    //end progress bar methods
 
 
     @Override
