@@ -3,10 +3,13 @@ package com.codepath.apps.restclienttemplate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -20,6 +23,7 @@ import cz.msebera.android.httpclient.Header;
 public class ComposeActivity extends AppCompatActivity {
     public static final String RESULT_TWEET_KEY = "result_tweet";
     EditText etTweetInput;
+    TextView tvChar;
     Button btnSend;
     TwitterClient client;
 
@@ -30,6 +34,21 @@ public class ComposeActivity extends AppCompatActivity {
         
         etTweetInput = findViewById(R.id.etTweetInput);
         btnSend = findViewById(R.id.btnSend);
+        tvChar = findViewById(R.id.tvChar);
+
+        final TextWatcher mTextEditorWatcher = new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //This sets a textview to the current length
+                tvChar.setText(String.valueOf(280 - s.length()));
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        };
+        etTweetInput.addTextChangedListener(mTextEditorWatcher);
         
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
