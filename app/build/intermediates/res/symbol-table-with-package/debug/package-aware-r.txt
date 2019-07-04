@@ -750,6 +750,9 @@ id icon
 id icon_group
 id ifRoom
 id image
+id imageButton
+id imageButton2
+id imageButton3
 id info
 id invisible
 id italic
