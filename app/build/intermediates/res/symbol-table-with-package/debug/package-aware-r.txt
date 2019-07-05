@@ -654,7 +654,7 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable ic_action_name
 drawable ic_launcher
-drawable ic_launcher_twitter_round
+drawable ic_launcher_twitter
 drawable ic_vector_heart
 drawable ic_vector_heart_stroke
 drawable ic_vector_messages

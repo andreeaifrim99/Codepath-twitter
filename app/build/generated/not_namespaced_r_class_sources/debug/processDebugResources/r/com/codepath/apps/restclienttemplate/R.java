@@ -3458,7 +3458,7 @@ public final class R {
     public static final int abc_vector_test=0x7f060053;
     public static final int ic_action_name=0x7f060054;
     public static final int ic_launcher=0x7f060055;
-    public static final int ic_launcher_twitter_round=0x7f060056;
+    public static final int ic_launcher_twitter=0x7f060056;
     public static final int ic_vector_heart=0x7f060057;
     public static final int ic_vector_heart_stroke=0x7f060058;
     public static final int ic_vector_messages=0x7f060059;
