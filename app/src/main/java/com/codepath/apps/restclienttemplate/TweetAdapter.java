@@ -6,6 +6,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     private List<Tweet> mTweets;
     private Context context;
+    Button retweetBtn;
 
     //pass in tweets array in constructor
     public TweetAdapter(List<Tweet> tweets) {
@@ -65,6 +67,18 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.tvBody.setText(tweet.body);
 
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
+
+       /* retweetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //should open up new message compose activity
+                //Intent composeTweet = new Intent(this, ComposeActivity.class);
+                //startActivityForResult(composeTweet, 100);
+                //should have already @the user
+                //everything else functions the same
+                //make the button a different color
+            }
+        });*/
     }
 
     //following 2 methods are used to implement the refresh feature
@@ -103,7 +117,6 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName); //this is the name
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
-            //FIGURE OUT DATE?
         }
     }
 }

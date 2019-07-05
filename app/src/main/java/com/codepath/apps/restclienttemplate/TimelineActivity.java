@@ -28,12 +28,14 @@ public class TimelineActivity extends AppCompatActivity {
 
     public static final int COMPOSE_TWEET_REQUEST_CODE = 100;
     private SwipeRefreshLayout swipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
     MenuItem miActionProgressItem;
 
     TwitterClient client;
     TweetAdapter tweetAdapter;
     ArrayList<Tweet> tweets;
     RecyclerView rvTweets;
+    long maxId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +51,12 @@ public class TimelineActivity extends AppCompatActivity {
         //construct adapter from datasource
         tweetAdapter = new TweetAdapter(tweets);
         //RV setup (layout manager, use adapter)
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
-        //sert adapter
+        LinearLayoutManager managerLin = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(managerLin);
+        //set adapter
         rvTweets.setAdapter(tweetAdapter);
+
+        //should set a twitter icon on the action bar
 
         //getSupportActionBar().setTitle("Twitter");
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -74,6 +79,19 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
+        //used for endless scrolling
+        scrollListener = new EndlessRecyclerViewScrollListener(managerLin) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadNextDataFromApi(page);
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        rvTweets.addOnScrollListener(scrollListener);
+        //end endless scrolling
+
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -81,6 +99,18 @@ public class TimelineActivity extends AppCompatActivity {
                 android.R.color.holo_red_light);
     }
 
+    //method for endless scrolling
+    public void loadNextDataFromApi(int offset) {
+        // Send an API request to retrieve appropriate paginated data
+        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
+        //  --> Deserialize and construct new model objects from the API response
+        //  --> Append the new data objects to the existing set of items inside the array of items
+        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
+        maxId = tweets.get(tweets.size() - 1).uid; //gets id of last tweet
+        populateTimeline(maxId);
+    }
+
+    //used to refresh
     public void fetchTimelineAsync(int page) {
         // Send the network request to fetch the updated data
         // `client` here is an instance of Android Async HTTP
@@ -93,7 +123,7 @@ public class TimelineActivity extends AppCompatActivity {
                    tweets.add(Tweet.fromJSON(json.getJSONObject(i)));
                }*/
 
-        populateTimeline();
+        populateTimeline(maxId);
                 // Now we call setRefreshing(false) to signal refresh has finished
         swipeContainer.setRefreshing(false);
         //hideProgressBar();
@@ -114,7 +144,7 @@ public class TimelineActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Store instance of the menu item containing progress
         miActionProgressItem = menu.findItem(R.id.miActionProgress);
-        populateTimeline();
+        populateTimeline(maxId);
 
         // Return to finish
         return super.onPrepareOptionsMenu(menu);
@@ -155,16 +185,16 @@ public class TimelineActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void composeMessage() {
+    public void composeMessage() {
         //open ComposeActivity to create a new tweet
         Intent composeTweet = new Intent(this, ComposeActivity.class);
         startActivityForResult(composeTweet, COMPOSE_TWEET_REQUEST_CODE);
     }
 
-    private void populateTimeline() {
+    private void populateTimeline(long maxId) {
         showProgressBar();
 
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
+        client.getHomeTimeline(maxId, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 //Log.d("TwitterClient", response.toString());

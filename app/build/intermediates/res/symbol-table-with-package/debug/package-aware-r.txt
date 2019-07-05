@@ -722,6 +722,7 @@ id chronometer
 id clip_horizontal
 id clip_vertical
 id collapseActionView
+id commentBtn
 id content
 id contentPanel
 id custom
@@ -750,15 +751,13 @@ id icon
 id icon_group
 id ifRoom
 id image
-id imageButton
-id imageButton2
-id imageButton3
 id info
 id invisible
 id italic
 id item_touch_helper_previous_elevation
 id ivProfileImage
 id left
+id likeBtn
 id line1
 id line3
 id listMode
@@ -783,6 +782,7 @@ id percent
 id progress_circular
 id progress_horizontal
 id radio
+id retweetBtn
 id right
 id right_icon
 id right_side
