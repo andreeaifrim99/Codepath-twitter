@@ -28,6 +28,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
         tvName = (TextView) findViewById(R.id.tvName);
         tvHandle = (TextView) findViewById(R.id.tvHandle);
         tvDate = (TextView) findViewById(R.id.tvDate);
+        ivImage = (ImageView) findViewById(R.id.ivImage);
         tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
         //Log.d("MovieDetailsActivity", String.format("Showing details for '%s'", movie.getTitle()));
 
