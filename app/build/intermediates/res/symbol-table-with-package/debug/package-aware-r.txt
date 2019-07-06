@@ -755,6 +755,8 @@ id info
 id invisible
 id italic
 id item_touch_helper_previous_elevation
+id ivEntity
+id ivImage
 id ivProfileImage
 id left
 id likeBtn
@@ -835,6 +837,9 @@ id top
 id topPanel
 id tvBody
 id tvChar
+id tvDate
+id tvHandle
+id tvName
 id tvUserName
 id uniform
 id up
@@ -879,6 +884,7 @@ layout action_view_progress
 layout activity_compose
 layout activity_login
 layout activity_timeline
+layout activity_tweet_details
 layout item_tweet
 layout notification_action
 layout notification_action_tombstone
